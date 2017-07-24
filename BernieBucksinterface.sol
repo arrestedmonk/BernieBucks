@@ -1,53 +1,18 @@
-pragma solidity ^0.4.11;
 
+pragma solidity ^0.4.9;
 
-/**
- * Math operations with safety checks
- */
-library SafeMath {
-  function mul(uint a, uint b) internal returns (uint) {
-    uint c = a * b;
-    assert(a == 0 || c / a == b);
-    return c;
-  }
+ /* New ERC23 contract interface */
 
-  function div(uint a, uint b) internal returns (uint) {
-    // assert(b > 0); // Solidity automatically throws when dividing by 0
-    uint c = a / b;
-    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-    return c;
-  }
+contract ERC223 {
+  uint public totalSupply;
+  function balanceOf(address who) constant returns (uint);
 
-  function sub(uint a, uint b) internal returns (uint) {
-    assert(b <= a);
-    return a - b;
-  }
+  function name() constant returns (string _name);
+  function symbol() constant returns (string _symbol);
+  function decimals() constant returns (uint8 _decimals);
+  function totalSupply() constant returns (uint256 _supply);
 
-  function add(uint a, uint b) internal returns (uint) {
-    uint c = a + b;
-    assert(c >= a);
-    return c;
-  }
-
-  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
-    return a >= b ? a : b;
-  }
-
-  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
-    return a < b ? a : b;
-  }
-
-  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
-    return a >= b ? a : b;
-  }
-
-  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
-    return a < b ? a : b;
-  }
-
-  function assert(bool assertion) internal {
-    if (!assertion) {
-      throw;
-    }
-  }
+  function transfer(address to, uint value) returns (bool ok);
+  function transfer(address to, uint value, bytes data) returns (bool ok);
+  event Transfer(address indexed from, address indexed to, uint value, bytes indexed data);
 }
